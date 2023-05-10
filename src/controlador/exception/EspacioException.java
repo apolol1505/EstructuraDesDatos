@@ -17,5 +17,6 @@ public class EspacioException extends Exception{
     public EspacioException() {
         super("No hay espacio suficiente para almacenar mas sucursales");
     }
+
     
 }

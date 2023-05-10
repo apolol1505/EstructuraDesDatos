@@ -6,13 +6,7 @@ package vista;
 
 import controlador.SucursalControl;
 import controlador.exception.EspacioException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import modelo.Sucursal;
 import vista.modeloTabla.ModeloTablaSucursal;
 
 /**
@@ -46,12 +40,12 @@ public class JFrmSucursal extends javax.swing.JDialog {
             try {
                 this.control.registrar();
                 limpiar();
-                JOptionPane.showMessageDialog(null, "Guardado correctamente","GUARDADO",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Guardado correctamente", "GUARDADO", JOptionPane.INFORMATION_MESSAGE);
             } catch (EspacioException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Los campos no puede quedar en blanco","ERROR",JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, "Los campos no puede quedar en blanco", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         limpiar();
 

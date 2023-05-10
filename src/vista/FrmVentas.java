@@ -7,8 +7,6 @@ package vista;
 import controlador.SucursalControl;
 import controlador.exception.EspacioException;
 import controlador.exception.VentasException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vista.modeloTabla.ModeloTablaVenta;
 
@@ -61,27 +59,23 @@ public class FrmVentas extends javax.swing.JDialog {
 
             lblMes.setText(this.control.getVenta().getMes().toString());
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una venta", "ERROR", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, "Seleccione una venta", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
-    private void modificar() {
+    private void modificar() throws EspacioException {
         if (txtValor.getText().trim().isEmpty() && lblMes.getText().isEmpty()) {
-
-//this.control.getSucursal().setValor(Double.parseDouble(txtValor.getText()));
-            try {
-                this.control.guardarVentas(fila, Double.parseDouble(txtValor.getText()));
-                limpiar();
-                JOptionPane.showMessageDialog(null, "Se ha actualizado", "ACTUALIZADO", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (VentasException ex) {
-                JOptionPane.showMessageDialog(null, "", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Llene todo los campos", "ERROR", JOptionPane.ERROR);
+            throw new EspacioException("Seleccione un mes para poder agregar un valor");
         }
+        try {
+            this.control.guardarVentas(fila, Double.parseDouble(txtValor.getText()));
+            limpiar();
+            JOptionPane.showMessageDialog(null, "Se ha actualizado", "ACTUALIZADO", JOptionPane.INFORMATION_MESSAGE);
 
+        } catch (VentasException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -270,7 +264,13 @@ public class FrmVentas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        modificar();
+
+        try {
+            modificar();
+        } catch (EspacioException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
